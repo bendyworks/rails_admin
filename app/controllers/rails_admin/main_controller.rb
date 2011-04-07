@@ -234,7 +234,7 @@ module RailsAdmin
       # search over all string fields  
       else
         @properties.select{|property| property[:type] == :string }.each do |property|
-          statements << "(#{table_name}.#{property[:name]} LIKE ?)"
+          statements << "(#{table_name}.#{property[:name]} ILIKE ?)"
           values << "%#{query}%"
         end
       end
@@ -257,7 +257,7 @@ module RailsAdmin
         if field = @model_config.list.fields.find {|f| f.name == key.to_sym}
           case field.type
           when :string, :text
-            statements << "(#{table_name}.#{key} LIKE ?)"
+            statements << "(#{table_name}.#{key} ILIKE ?)"
             values << value
           when :boolean
             statements << "(#{table_name}.#{key} = ?)"
